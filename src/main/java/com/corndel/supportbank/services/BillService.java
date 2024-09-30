@@ -1,15 +1,16 @@
 package com.corndel.supportbank.services;
 import com.corndel.supportbank.models.Bill;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 import picocli.CommandLine;
 
 @Command(name = "split", description = "Split the bill")
 public class BillService implements Runnable{
 
-    @CommandLine.Parameters(index = "0")
+    @Parameters(index = "0")
     private int total;
 
-    @CommandLine.Parameters(index = "1")
+    @Parameters(index = "1")
     private int numberOfPeople;
 
     @Override

@@ -1,9 +1,10 @@
 package com.corndel.supportbank;
 import com.corndel.supportbank.Controllers.BillController;
+import com.corndel.supportbank.Controllers.CurrencyController;
 import picocli.CommandLine.Command;
 import picocli.CommandLine;
 
-@Command(name = "Supportbank", description = "banking",  subcommands = {BillController.class})
+@Command(name = "supportbank", description = "banking",  subcommands = {BillController.class, CurrencyController.class} )
 public class SupportBank {
 
   public static void main(String[] args) {
