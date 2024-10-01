@@ -43,17 +43,12 @@ public class Transaction {
         Path filePath = Paths.get("src", "data", "transactions", fileName);
 
         // Check if the file exists
-        if (!Files.exists(filePath)) {
-            throw new IOException("File not found: " + filePath);
-        }
+
 
         // Convert to list
         List<String> lines = Files.readAllLines(filePath);
 
         // Check if there are at least 2 lines (headers + data)
-        if (lines.size() < 2) {
-            throw new IOException("Not enough data in the file: " + filePath);
-        }
 
         // Process each line to split up and create transaction, starting from the second line
         for (int i = 1; i < lines.size(); i++) { // Start from 1 to skip header
