@@ -25,6 +25,10 @@ public class Transaction {
         return parts;
     }
 
+    public static void main(String[] args) {
+
+    }
+
 }
 
 

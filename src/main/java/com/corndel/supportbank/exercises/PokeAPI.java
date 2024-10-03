@@ -1,9 +1,14 @@
 package com.corndel.supportbank.exercises;
 
-// import kong.unirest.Unirest;
-
-// import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+//import kong.unirest.ObjectMapper;
+import kong.unirest.Unirest;
+import com.fasterxml.jackson.core.type.TypeReference;
+import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONObject;
+
+import java.util.List;
 
 /**
  * This class represents a Pokemon. It uses Java's record syntax to
@@ -27,15 +32,46 @@ public class PokeAPI {
    */
   public static Pokemon getPokemonByName(String name) throws Exception {
     // TODO: Create the url by appending the name to the base url
-
+    String url = "https://pokeapi.co/api/v2/pokemon/" + name;
     // TODO: Make a GET request to the url
     // Hint: Use Unirest.get()
+    var response = Unirest
+            .get(url)
+            .header("Accept","application/json")
+            .asString();
+
+    String json = response.getBody();
+    //System.out.println(json);
 
     // TODO: Parse the response body into a Pokemon object
     // Hint: Use Jackson's ObjectMapper to map the response body to Pokemon.class
+    ObjectMapper mapper = new ObjectMapper();
+    Pokemon pokemon = mapper.readValue(json, Pokemon.class);
+    System.out.println(pokemon);
 
     // TODO: Return the Pokemon
-    return null;
+    return pokemon;
+  }
+
+
+  public static List<Pokemon> getPokemonList() throws Exception{
+    String url = "https://pokeapi.co/api/v2/pokemon?limit=10000";
+    var response = Unirest
+            .get(url)
+            .header("Accept", "application/json")
+            .asString();
+
+    String json = response.getBody();
+    //System.out.println(json);
+
+    JSONObject jsonObject = new JSONObject(json);
+    JSONArray results = jsonObject.getJSONArray("results");
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    List<Pokemon> pokemonList = objectMapper.readValue(results.toString(), new TypeReference<List<Pokemon>>() {});
+    System.out.println(pokemonList);
+    //System.out.println(pokemonList);
+    return pokemonList;
   }
 
   /**
@@ -45,6 +81,7 @@ public class PokeAPI {
     try {
       Pokemon pokemon = getPokemonByName("pikachu");
       System.out.println(pokemon);
+      //getPokemonList();
     } catch (Exception e) {
       e.printStackTrace();
     }
