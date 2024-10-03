@@ -23,6 +23,18 @@
     </dependency>
 
     <dependency>
+      <groupId>com.github.tomas-langer</groupId>
+      <artifactId>chalk</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+
+      <dependency>
+        <groupId>info.picocli</groupId>
+        <artifactId>picocli</artifactId>
+        <version>4.7.6</version>
+      </dependency>
+
+    <dependency>
       <groupId>com.konghq</groupId>
       <artifactId>unirest-modules-jackson</artifactId>
       <version>4.4.0</version>
@@ -62,7 +74,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
         <configuration>
-          <sourceEncoding>UTF-8</sourceEncoding>
+          <source>UTF-8</source>
           <release>21</release>
         </configuration>
       </plugin>
