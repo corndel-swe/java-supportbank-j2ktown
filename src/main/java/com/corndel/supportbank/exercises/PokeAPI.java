@@ -64,11 +64,16 @@ public class PokeAPI {
     String json = response.getBody();
     //System.out.println(json);
 
-    JSONObject jsonObject = new JSONObject(json);
-    JSONArray results = jsonObject.getJSONArray("results");
+
+//  This is another way to convert a jsonstring to an object.
+//    JSONObject jsonObject = new JSONObject(json);
+//    JSONArray results = jsonObject.getJSONArray("results");
 
     ObjectMapper objectMapper = new ObjectMapper();
-    List<Pokemon> pokemonList = objectMapper.readValue(results.toString(), new TypeReference<List<Pokemon>>() {});
+    var tree = objectMapper.readTree(json);
+    var treeArray = tree.get("results");
+
+    List<Pokemon> pokemonList = objectMapper.readValue(treeArray.toString(), new TypeReference<List<Pokemon>>() {});
     System.out.println(pokemonList);
     //System.out.println(pokemonList);
     return pokemonList;
@@ -79,9 +84,9 @@ public class PokeAPI {
    */
   public static void main(String[] args) {
     try {
-      Pokemon pokemon = getPokemonByName("pikachu");
-      System.out.println(pokemon);
-      //getPokemonList();
+//      Pokemon pokemon = getPokemonByName("pikachu");
+//      System.out.println(pokemon);
+        getPokemonList();
     } catch (Exception e) {
       e.printStackTrace();
     }
