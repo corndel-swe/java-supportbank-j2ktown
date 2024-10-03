@@ -4,6 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 //import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
+import com.fasterxml.jackson.core.type.TypeReference;
+import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONObject;
+
+import java.util.List;
 
 /**
  * This class represents a Pokemon. It uses Java's record syntax to
@@ -48,6 +53,27 @@ public class PokeAPI {
     return pokemon;
   }
 
+
+  public static List<Pokemon> getPokemonList() throws Exception{
+    String url = "https://pokeapi.co/api/v2/pokemon?limit=10000";
+    var response = Unirest
+            .get(url)
+            .header("Accept", "application/json")
+            .asString();
+
+    String json = response.getBody();
+    //System.out.println(json);
+
+    JSONObject jsonObject = new JSONObject(json);
+    JSONArray results = jsonObject.getJSONArray("results");
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    List<Pokemon> pokemonList = objectMapper.readValue(results.toString(), new TypeReference<List<Pokemon>>() {});
+    System.out.println(pokemonList);
+    //System.out.println(pokemonList);
+    return pokemonList;
+  }
+
   /**
    * For debugging purposes..
    */
@@ -55,6 +81,7 @@ public class PokeAPI {
     try {
       Pokemon pokemon = getPokemonByName("pikachu");
       System.out.println(pokemon);
+      //getPokemonList();
     } catch (Exception e) {
       e.printStackTrace();
     }

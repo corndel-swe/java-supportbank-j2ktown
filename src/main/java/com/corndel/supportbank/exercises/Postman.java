@@ -4,6 +4,7 @@ package com.corndel.supportbank.exercises;
 
 import kong.unirest.Unirest;
 
+
 /**
  * This class represents a Message to be sent to the Postman Echo API.
  * You don't need to modify it.
@@ -39,9 +40,10 @@ public class Postman {
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
             .body(message) // convert to json and send to API
-            .asString(); // get response as a string
+            .asString(); // sends requets and gets response as a string
     // TODO: Return the response body as a string of JSON
     String json = response.getBody(); // convert into a string of json
+    System.out.println(json);
     return json;
   }
 
